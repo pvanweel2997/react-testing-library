@@ -3,6 +3,7 @@ import {  render, screen, waitFor, fireEvent } from '@testing-library/react';
 import App from './App';
 import { getUser } from './get-user'
 import { act } from 'react-dom/test-utils'
+import userEvent from '@testing-library/user-event'
 
 jest.mock('./get-user')
 
@@ -78,9 +79,10 @@ describe("When the user enters some text in the input element",() => {
 
     expect(screen.getByText(/You typed: .../))
 
-    fireEvent.change(screen.getByRole("textbox"),{
-      target: { value: 'Patrick'}
-    })
+    await userEvent.type(screen.getByRole("textbox"),"Patrick")
+    // fireEvent.change(screen.getByRole("textbox"),{
+    //   target: { value: 'Patrick'}
+    // })
     expect(screen.getByText(/You typed: Patrick/))
   })
 })
