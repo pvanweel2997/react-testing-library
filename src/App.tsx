@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {getUser, User} from './get-user';
+import CustomInput from './CustomInput';
 
 
 
@@ -30,18 +31,18 @@ function App() {
     </div>
   )
 }
-interface CustomInputProps {
-  children: React.ReactNode;
-  value: string;
-  onChange(e: React.ChangeEvent<HTMLInputElement>) : void;  
-}
+// interface CustomInputProps {
+//   children: React.ReactNode;
+//   value: string;
+//   onChange(e: React.ChangeEvent<HTMLInputElement>) : void;  
+// }
 
 
-const CustomInput = ({children, value, onChange} : CustomInputProps) => {
-  return <div>
-    <label htmlFor="search">{children}</label>
-    <input placeholder='Example' id="search" type="text" value={value} onChange={onChange}></input>
-  </div>
-}
+// const CustomInput = ({children, value, onChange} : CustomInputProps) => {
+//   return <div>
+//     <label htmlFor="search">{children}</label>
+//     <input placeholder='Example' id="search" type="text" value={value} onChange={onChange}></input>
+//   </div>
+// }
 
 export default App;
