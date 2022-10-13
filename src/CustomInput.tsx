@@ -1,5 +1,3 @@
-import react from 'react'
-
 interface CustomInputProps {
   children: React.ReactNode;
   value: string;
