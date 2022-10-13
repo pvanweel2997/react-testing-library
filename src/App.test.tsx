@@ -1,5 +1,5 @@
 import React from 'react';
-import {  render, screen, waitFor } from '@testing-library/react';
+import {  render, screen, waitFor, fireEvent } from '@testing-library/react';
 import App from './App';
 import { getUser } from './get-user'
 import { act } from 'react-dom/test-utils'
@@ -20,7 +20,6 @@ describe("When everything is OK",() => {
   test("should select the children that are being passed to the CustomInput component", () => {
     screen.getAllByText(/Input/);
     expect(screen.getAllByText("Input:")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Input:")[1]).toBeInTheDocument()
     let error;
     try {
       screen.getByText("Input")
@@ -33,8 +32,7 @@ describe("When everything is OK",() => {
   test("should select the input element by it's role", () => {
     screen.getAllByRole('textbox');
     expect(screen.getAllByRole('textbox')[0]).toBeInTheDocument()
-    expect(screen.getAllByRole('textbox')[1]).toBeInTheDocument()
-    expect(screen.getAllByRole("textbox").length).toEqual(2)
+    expect(screen.getAllByRole("textbox").length).toEqual(1)
   })
 
   test("should select the label element by it's text", () => {
@@ -71,5 +69,18 @@ describe("When the component fetches the user successfully",()=> {
     expect(await screen.findByText(/Username/)).toBeInTheDocument()
     screen.debug()
     expect(await screen.findByText(/name/)).toBeInTheDocument()
+  })
+})
+describe("When the user enters some text in the input element",() => {
+  test("it should display the text in the screen",async () => {
+    await act(async () =>  { render(<App />) })
+    act(() => expect(mockGetUser).toHaveBeenCalledTimes(1))
+
+    expect(screen.getByText(/You typed: .../))
+
+    fireEvent.change(screen.getByRole("textbox"),{
+      target: { value: 'Patrick'}
+    })
+    expect(screen.getByText(/You typed: Patrick/))
   })
 })
