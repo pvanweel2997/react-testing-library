@@ -18,8 +18,9 @@ describe("When everything is OK",() => {
     screen.debug()
   })
   test("should select the children that are being passed to the CustomInput component", () => {
-    screen.getByText("Input:");
-    expect(screen.getByText("Input:")).toBeInTheDocument()
+    screen.getAllByText(/Input/);
+    expect(screen.getAllByText("Input:")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Input:")[1]).toBeInTheDocument()
     let error;
     try {
       screen.getByText("Input")
@@ -30,22 +31,22 @@ describe("When everything is OK",() => {
   })
 
   test("should select the input element by it's role", () => {
-    screen.getByRole('textbox');
-    expect(screen.getByRole('textbox')).toBeInTheDocument()
+    screen.getAllByRole('textbox');
+    expect(screen.getAllByRole('textbox')[0]).toBeInTheDocument()
+    expect(screen.getAllByRole('textbox')[1]).toBeInTheDocument()
+    expect(screen.getAllByRole("textbox").length).toEqual(2)
   })
 
   test("should select the label element by it's text", () => {
     screen.getAllByLabelText("Input:")
-    
   })
 
   test("should select input label by placeholder text", () => {
-    screen.getByPlaceholderText("Example")
+    screen.getAllByPlaceholderText("Example")
   })
 
   test("should not find the role 'whatever' in our component", () => {
     expect(screen.queryByRole('whatever')).toBeNull;
-
   })
 })
 describe("When the component fetches the user successfully",()=> {
@@ -63,6 +64,7 @@ describe("When the component fetches the user successfully",()=> {
     mockGetUser.mockImplementationOnce(() => 
       Promise.resolve({id: '1', name})
     )
+    mockGetUser.mockResolvedValueOnce({id: "1", name})
     render(<App />)
     expect(screen.queryByText(/Username/)).toBeNull()
     screen.debug()
