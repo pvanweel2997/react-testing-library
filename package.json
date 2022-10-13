@@ -27,7 +27,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "coverage": "yarn test --coverage --watchAll=false"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +46,15 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,js,jsx}",
+      "!src/serviceWorker.ts",
+      "!src/index.tsx",
+      "!src/reportWebVitals.ts",
+      "!src/*.d.ts"
     ]
   }
 }
